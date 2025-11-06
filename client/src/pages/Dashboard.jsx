@@ -44,7 +44,13 @@ function Dashboard() {
   const editTitle = async (event) =>{
     event.preventDefault();
   }
-
+  const deleteResume = async (resumeId) =>{
+    const confirm = window.confirm("You want to delete ")
+    if(confirm){
+      setAllResumes( prev => prev.filter(resume => resume._id != resumeId))
+    }
+  }
+  
   useEffect(() => {
     loadAllResumes();
   }, []);
@@ -119,7 +125,7 @@ function Dashboard() {
 
                 {/* Hover Action Buttons */}
                 <div onClick={e => e.stopPropagation()} className="absolute top-1 right-1 hidden group-hover:flex items-center gap-1">
-                  <TrashIcon className="size-7 p-1.5 rounded hover:bg-white/50 text-slate-700 transition-colors" />
+                  <TrashIcon onClick={()=>{ deleteResume(resume._id)}} className="size-7 p-1.5 rounded hover:bg-white/50 text-slate-700 transition-colors" />
                   <PencilIcon onClick={()=>{setEditResumeId(resume._id); setTitle(resume.title)}} className="size-7 p-1.5 rounded hover:bg-white/50 text-slate-700 transition-colors" />
                 </div>
               </button>
