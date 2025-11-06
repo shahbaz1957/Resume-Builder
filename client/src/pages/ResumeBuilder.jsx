@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import dummyResumeData from "../assets/assets/assets";
+import PersonalInfoForm from "../components/home/PersonalInfoForm";
 import {
   ArrowLeft,
   Briefcase,
@@ -36,7 +37,7 @@ function ResumeBuilder() {
   }, [resumeId]);
 
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
-  const [_removeBackground, _setRemoveBackground] = useState(false);
+  const [removeBackground, setRemoveBackground] = useState(false);
 
   const sections = [
     { id: "personal", name: "Personal Info", icon: User },
@@ -47,7 +48,7 @@ function ResumeBuilder() {
     { id: "skills", name: "Skills", icon: Sparkles },
   ];
 
-  // const activeSection = sections[activeSectionIndex];
+  const activeSection = sections[activeSectionIndex];
 
   useEffect(() => {
     loadExistingResume();
@@ -114,6 +115,23 @@ function ResumeBuilder() {
                     Next <ChevronRight className="size-4" />
                   </button>
                 </div>
+              </div>
+
+              {/* Form Content */}
+              <div className="space-y-6">
+                {activeSection.id === "personal" && (
+                  <PersonalInfoForm
+                    data={resumeData.personal_info}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        personal_info: data,
+                      }))
+                    }
+                    removeBackground={removeBackground}
+                    setRemoveBackground={setRemoveBackground}
+                  />
+                )}
               </div>
             </div>
           </div>
